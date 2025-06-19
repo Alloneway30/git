@@ -3424,8 +3424,10 @@ coccicheck-test: $(COCCI_TEST_RES_GEN)
 coccicheck: coccicheck-test
 ifdef SPATCH_CONCAT_COCCI
 coccicheck: contrib/coccinelle/ALL.cocci.patch
+	! test -s contrib/coccinelle/ALL.cocci.patch
 else
 coccicheck: $(COCCICHECK_PATCHES_INTREE)
+	test $$(cat $(COCCICHECK_PATCHES_INTREE) | wc -c) = 0
 endif
 
 # See contrib/coccinelle/README
